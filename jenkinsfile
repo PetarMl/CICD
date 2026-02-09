@@ -1,0 +1,20 @@
+pipeline{
+    stages{
+        stage('LinuxCheck'){
+            agent{
+                label: 'slave-1'
+            }
+            steps{
+            sh 'java -version'
+        }
+        }
+        stage('WindowsCheck'){
+            agent{
+                label: 'windows-slave'
+            }
+            steps{
+                bat 'choco -v'
+            }
+        }
+    }
+}
