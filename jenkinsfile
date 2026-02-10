@@ -3,7 +3,7 @@ pipeline{
     stages{
         stage('LinuxCheck'){
             agent{
-                label: 'slave-1'
+                label 'slave-1'
             }
             steps{
             sh 'java -version'
@@ -11,7 +11,7 @@ pipeline{
         }
         stage('WindowsCheck'){
             agent{
-                label: 'windows-slave'
+                label 'windows-slave'
             }
             steps{
                 bat 'choco -v'
