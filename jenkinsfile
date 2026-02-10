@@ -20,7 +20,7 @@ pipeline{
         stage('DockerCheck'){
             agent{
                 docker{
-                label 'Docker_General'
+                label 'docker-agent'
                 image 'maven:latest'
             }
             }
