@@ -17,5 +17,16 @@ pipeline{
                 bat 'choco -v'
             }
         }
+        stage('DockerCheck'){
+            agent{
+                docker{
+                label 'Docker_General'
+                image 'maven:latest'
+            }
+            }
+            steps{
+                sh 'echo "Radi Docker! ${BUILD_NUMBER}"'
+            }
+        }
     }
 }
