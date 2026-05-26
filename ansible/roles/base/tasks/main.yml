@@ -1,0 +1,10 @@
+---
+- name: install packages on the agents
+  ansible.builtin.package:
+    name:
+      - "{{ java_package }}"
+      - git
+      - curl
+      - wget
+      - "{{ node_exporter_package }}"
+    state: present

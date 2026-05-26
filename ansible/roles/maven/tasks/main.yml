@@ -1,0 +1,7 @@
+---
+- name: install maven on the Ubuntu slave
+  ansible.builtin.apt:
+    name:
+      - maven
+    state: present
+    update_cache: yes
