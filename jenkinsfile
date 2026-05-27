@@ -1,44 +1,23 @@
-pipeline {
+stage('Build') {
+    agent {
+        label 'ubuntu-agent'
+    }
+
+    steps {
+        sh '''
+        cd maven-projekat
+        mvn clean install
+        '''
+    }
+}
+
+stage('Ansible Deploy') {
     agent any
 
-    stages {
-
-        stage('UbuntuCheck') {
-            agent {
-                label 'ubuntu-agent'
-            }
-
-            steps {
-                sh '''
-                java -version
-                mvn -version
-                '''
-            }
-        }
-
-        stage('FedoraCheck') {
-            agent {
-                label 'fedora-agent'
-            }
-
-            steps {
-                sh 'java -version'
-            }
-        }
-
-        stage('Maven') {
-            agent {
-                label 'ubuntu-agent'
-            }
-
-            steps {
-                sh '''
-                   cd maven-projekat
-                   mvn clean install
-                   cd ../ansible
-                   ansible-playbook -i inventory playbook.yml --private-key /var/lib/jenkins/.ssh/id_ed25519
-                   '''
-            }
-        }
+    steps {
+        sh '''
+        cd ansible
+        ansible-playbook -i inventory playbook.yml
+        '''
     }
 }
