@@ -8,3 +8,9 @@
       - wget
       - "{{ node_exporter_package }}"
     state: present
+
+- name: start and  enable node exporter on the slaves
+  ansible.builtin.service:
+    name: "{{ node_exporter_service }}"
+    state: started
+    enabled: true

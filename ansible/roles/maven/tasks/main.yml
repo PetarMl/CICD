@@ -5,3 +5,12 @@
       - maven
     state: present
     update_cache: yes
+
+- name: copy Maven project on the Ubuntu slave
+  tags: maven,ubuntu
+  ansible.builtin.copy:
+    src: /home/peki/maven-projekat/target/maven-projekat-1.0-SNAPSHOT.jar
+    dest: /home/jenkins-slave/Desktop
+    owner: root
+    group: root
+    mode: 0644
