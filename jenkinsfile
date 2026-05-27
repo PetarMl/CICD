@@ -26,18 +26,6 @@ pipeline {
             }
         }
 
-        stage('DockerCheck') {
-            agent {
-                docker {
-                    image 'maven:latest'
-                }
-            }
-
-            steps {
-                sh 'echo "Radi Docker! ${BUILD_NUMBER}"'
-            }
-        }
-
         stage('Maven') {
             agent {
                 label 'ubuntu-agent'
