@@ -1,41 +1,51 @@
-pipeline{
+pipeline {
     agent any
-    stages{
-        stage('UbuntuCheck'){
-            agent{
+
+    stages {
+
+        stage('UbuntuCheck') {
+            agent {
                 label 'ubuntu-agent'
             }
-            steps{
-            sh '''
-            java -version
-            maven -version
-            '''
+
+            steps {
+                sh '''
+                java -version
+                mvn -version
+                '''
+            }
         }
-        }
-        stage('FedoraCheck'){
-            agent{
+
+        stage('FedoraCheck') {
+            agent {
                 label 'fedora-agent'
             }
-            steps{
+
+            steps {
                 sh 'java -version'
             }
         }
-        stage('DockerCheck'){
-            agent{
-                docker{
-                image 'maven:latest'
+
+        stage('DockerCheck') {
+            agent {
+                docker {
+                    image 'maven:latest'
+                }
             }
-            }
-            steps{
+
+            steps {
                 sh 'echo "Radi Docker! ${BUILD_NUMBER}"'
             }
         }
-        stage('Maven')
-        agent{
-            label 'ubuntu-agent'
-        }
-        steps{
-            sh 'mvn clean install'
+
+        stage('Maven') {
+            agent {
+                label 'ubuntu-agent'
+            }
+
+            steps {
+                sh 'mvn clean install'
+            }
         }
     }
 }
