@@ -1,4 +1,4 @@
 [monitoring]
-192.168.100.184 ansible_user=fedora
+192.168.100.184 ansible_user=jenkins
 [java_maven]
-192.168.100.161 ansible_user=jenkins-slave
+192.168.100.161 ansible_user=jenkins
