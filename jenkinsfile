@@ -36,7 +36,7 @@ pipeline {
                    cd maven-projekat
                    mvn clean install
                    cd ../ansible
-                   ansible-playbook playbook.yml
+                   ansible-playbook -i inventory playbook.yml --private-key /var/lib/jenkins/.ssh/id_ed25519
                    '''
             }
         }
