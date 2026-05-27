@@ -1,23 +1,55 @@
-stage('Build') {
-    agent {
-        label 'ubuntu-agent'
-    }
+pipeline {
+    agent none
 
-    steps {
-        sh '''
-        cd maven-projekat
-        mvn clean install
-        '''
-    }
-}
+    stages {
 
-stage('Ansible Deploy') {
-    agent any
+        stage('Ubuntu Check') {
+            agent {
+                label 'ubuntu-agent'
+            }
 
-    steps {
-        sh '''
-        cd ansible
-        ansible-playbook -i inventory playbook.yml
-        '''
+            steps {
+                sh '''
+                java -version
+                mvn -version
+                '''
+            }
+        }
+
+        stage('Fedora Check') {
+            agent {
+                label 'fedora-agent'
+            }
+
+            steps {
+                sh '''
+                java -version
+                '''
+            }
+        }
+
+        stage('Build Maven Project') {
+            agent {
+                label 'ubuntu-agent'
+            }
+
+            steps {
+                sh '''
+                cd maven-projekat
+                mvn clean install
+                '''
+            }
+        }
+
+        stage('Ansible Deploy') {
+            agent any
+
+            steps {
+                sh '''
+                cd ansible
+                ansible-playbook -i inventory playbook.yml
+                '''
+            }
+        }
     }
 }
