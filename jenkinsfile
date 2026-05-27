@@ -35,6 +35,8 @@ pipeline {
                 sh '''
                    cd maven-projekat
                    mvn clean install
+                   cd ../ansible
+                   ansible-playbook playbook.yml
                    '''
             }
         }
