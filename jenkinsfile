@@ -32,7 +32,10 @@ pipeline {
             }
 
             steps {
-                sh 'mvn clean install'
+                sh '''
+                   cd maven-projekat
+                   mvn clean install
+                   '''
             }
         }
     }
