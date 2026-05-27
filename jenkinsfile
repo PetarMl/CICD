@@ -1,20 +1,23 @@
 pipeline{
     agent any
     stages{
-        stage('LinuxCheck'){
+        stage('UbuntuCheck'){
             agent{
-                label 'slave-1'
+                label 'ubuntu-agent'
             }
             steps{
-            sh 'java -version'
+            sh '''
+            java -version
+            maven -version
+            '''
         }
         }
-        stage('WindowsCheck'){
+        stage('FedoraCheck'){
             agent{
-                label 'windows-slave'
+                label 'fedora-agent'
             }
             steps{
-                bat 'choco -v'
+                sh 'java -version'
             }
         }
         stage('DockerCheck'){
@@ -26,6 +29,13 @@ pipeline{
             steps{
                 sh 'echo "Radi Docker! ${BUILD_NUMBER}"'
             }
+        }
+        stage('Maven')
+        agent{
+            label 'ubuntu-agent'
+        }
+        steps{
+            sh 'mvn clean install'
         }
     }
 }
