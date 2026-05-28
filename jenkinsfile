@@ -14,8 +14,7 @@ pipeline {
                 mvn -version
                 '''
             }
-        }
-
+       }
         stage('Fedora Check') {
             agent {
                 label 'fedora-agent'
@@ -28,28 +27,33 @@ pipeline {
             }
         }
 
-        stage('Build Maven Project') {
-            agent {
-                label 'ubuntu-agent'
-            }
+        stage('Maven Build') {
+    agent {
+        label 'ubuntu-agent'
+    }
 
-            steps {
-                sh '''
-                cd maven-projekat
-                mvn clean install
-                '''
-            }
-        }
+    steps {
+        sh '''
+            cd maven-projekat
+            mvn clean install
+        '''
 
-        stage('Ansible Deploy') {
-            agent any
+        stash includes: 'maven-projekat/target/*.jar', name: 'jar-file'
+    }
+}
 
-            steps {
-                sh '''
-                cd ansible
-                ansible-playbook -i inventory playbook.yml
-                '''
-            }
-        }
+stage('Ansible Deploy') {
+    agent any
+
+    steps {
+
+        unstash 'jar-file'
+
+        sh '''
+            cd ansible
+            ansible-playbook -i inventory playbook.yml
+        '''
+    }
+}
     }
 }
