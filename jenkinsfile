@@ -55,5 +55,17 @@ stage('Ansible Deploy') {
         '''
     }
 }
+
+stage('Health Check')
+{
+    agent any
+
+    steps{
+           sh '''
+            echo '===== HEALTH CHECK ==============='
+            curl -v http://192.168.100.161:8080/health
+              '''
+}
+}
     }
 }
