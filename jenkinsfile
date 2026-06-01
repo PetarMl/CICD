@@ -69,7 +69,7 @@ stage('Deployment Report Generation (General Info)'){
         cat deployment_report.csv
     '''
     archiveArtifacts artifacts: 'deployment_report.csv'
-}    
+    
 }
 
 }
