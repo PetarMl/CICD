@@ -59,16 +59,17 @@ stage('Ansible Deploy') {
 stage('Deployment Report Generation (General Info)'){
   agent any
   steps{
-        sh ''' 
-             if[ ! -f deployment_report.csv]; then
-                echo "build,number,date,status" > deployment_report.csv
-             fi
+        sh '''
+        if [ ! -f deployment_report.csv ]; then
+            echo "build,number,date,status" > deployment_report.csv
+        fi
 
-            echo "${BUILD_NUMBER},$(date '+%Y-%m-%d %H:%M:%S'),SUCCESS" >> deployment_report.csv
-         
-            cat deployment_report.csv
-                 '''
-    
+        echo "${BUILD_NUMBER},$(date '+%Y-%m-%d %H:%M:%S'),SUCCESS" >> deployment_report.csv
+
+        cat deployment_report.csv
+    '''
+    archiveArtifacts artifacts: 'deployment_report.csv'
+}    
 }
 
 }
