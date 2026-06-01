@@ -56,16 +56,22 @@ stage('Ansible Deploy') {
     }
 }
 
-stage('Health Check')
-{
-    agent any
+stage('Deployment Report Generation (General Info)'){
+  agent any
+  steps{
+        sh ''' 
+             if[ ! -f deployment_report.csv]; then
+                echo "build,number,date,status" > deployment_report.csv
+             fi
 
-    steps{
-           sh '''
-            echo '===== HEALTH CHECK ==============='
-            curl -v http://192.168.100.161:8080/health
-              '''
+            echo "${BUILD_NUMBER},$(date '+%Y-%m-%d %H:%M:%S'),SUCCESS" >> deployment_report.csv
+         
+            cat deployment_report.csv
+                 '''
+    
 }
+
 }
+
     }
 }
