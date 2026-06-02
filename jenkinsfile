@@ -74,5 +74,20 @@ stage('Deployment Report Generation (General Info)'){
 
 }
 
+stage('Monitoring Links'){
+  agent any
+  steps{
+      echo '''
+      Grafana :  http://192.168.100.148:3000
+      Promeheus : http://192.168.100.148:9090
+      Alertmanager : http://192.168.100.148:9093  
+         '''
+
+
+
+}
+ 
+}
+
     }
 }
